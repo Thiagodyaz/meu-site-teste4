@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPA Suplementos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8ff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #0055aa;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    .subtitle {
+      font-size: 16px;
+      margin-top: 5px;
+    }
+    nav {
+      background-color: #004080;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .menu-links {
+      display: none;
+      flex-direction: column;
+      background-color: #004080;
+      width: 100%;
+    }
+    .menu-links a {
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      border-top: 1px solid #0066cc;
+    }
+    .menu-links a:hover {
+      background-color: #0066cc;
+    }
+    .container {
+      padding: 20px;
+    }
+    .category-title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 24px;
+      color: #0055aa;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+    }
+    .product img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .add-btn {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #cart {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 300px;
+      z-index: 999;
+    }
+    #cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    #cart ul li {
+      margin-bottom: 10px;
+    }
+    #checkout {
+      background-color: #00bb00;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    @media (max-width: 600px) {
+      .menu-links {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SPA Suplementos</h1>
+    <div class="subtitle">Sua evolução começa aqui.</div>
+  </header>
+
+  <nav>
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+    <div class="menu-links" id="menu">
+      <a href="#creatina">Creatinas</a>
+      <a href="#whey-concentrado">Whey Concentrado</a>
+      <a href="#whey-isolado">Whey Isolado</a>
+      <a href="#termogenico">Termogênicos</a>
+      <a href="#cafeina">Cafeína</a>
+      <a href="https://wa.me/5521965748366" target="_blank">Contato via WhatsApp</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="creatina">
+      <div class="category-title">Creatinas</div>
+      <div class="product-grid" id="creatina-list"></div>
+    </div>
+    <div id="whey-concentrado">
+      <div class="category-title">Whey Concentrado</div>
+      <div class="product-grid" id="whey-concentrado-list"></div>
+    </div>
+    <div id="whey-isolado">
+      <div class="category-title">Whey Isolado</div>
+      <div class="product-grid" id="whey-isolado-list"></div>
+    </div>
+    <div id="termogenico">
+      <div class="category-title">Termogênicos</div>
+      <div class="product-grid" id="termogenico-list"></div>
+    </div>
+    <div id="cafeina">
+      <div class="category-title">Cafeína</div>
+      <div class="product-grid" id="cafeina-list"></div>
+    </div>
+  </div>
+
+  <div id="cart">
+    <h3>Carrinho</h3>
+    <ul id="cart-items"></ul>
+    <p>Total: R$ <span id="total">0.00</span></p>
+    <button id="checkout">Finalizar no WhatsApp</button>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    const products = [
+      { name: "Creatina Integral Medica 300g", price: 119.90, category: "creatina", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" }, 
+      { name: "Creatina Dux Human Health", price: 119.90, category: "creatina", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Creatina Black Skull 300g", price: 99.90, category: "creatina", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Whey 100% Concentrado Integral Medica 900g", price: 129.90, category: "whey-concentrado", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Whey 100% Concentrado Max Titanium 900g", price: 124.90, category: "whey-concentrado", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Whey 100% Concentrado Black Skull 900g", price: 104.90, category: "whey-concentrado", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Whey Isolado Max Titanium 900g", price: 229.90, category: "whey-isolado", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "ISO-X 900g", price: 99.90, category: "whey-isolado", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Thermo Flame Black Skull 60 comprimidos", price: 35.90, category: "termogenico", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Thermo BodyAction 60 cápsulas", price: 49.90, category: "termogenico", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Cafeína BodyAction 30 cápsulas", price: 29.90, category: "cafeina", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" },
+      { name: "Pure Caffeine MD 60 cápsulas", price: 42.90, category: "cafeina", image: "C:/Users/breno/Desktop/site/images/foto1.jpg" }
+    ];
+
+    const cartItems = document.getElementById('cart-items');
+    const totalEl = document.getElementById('total');
+    let cart = [];
+
+    products.forEach((product, index) => {
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>R$ ${product.price.toFixed(2)}</p>
+        <button class="add-btn" onclick="addToCart(${index})">Adicionar</button>
+      `;
+      document.getElementById(`${product.category}-list`).appendChild(div);
+    });
+
+    function addToCart(index) {
+      const product = products[index];
+      cart.push(product);
+      renderCart();
+    }
+
+    function renderCart() {
+      cartItems.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - R$ ${item.price.toFixed(2)}`;
+        cartItems.appendChild(li);
+        total += item.price;
+      });
+      totalEl.textContent = total.toFixed(2);
+    }
+
+    document.getElementById('checkout').addEventListener('click', () => {
+      if (cart.length === 0) return alert('Seu carrinho está vazio!');
+      const message = cart.map(p => `${p.name} - R$ ${p.price.toFixed(2)}`).join('\n');
+      const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+      const whatsappMessage = encodeURIComponent(`Olá! Gostaria de finalizar meu pedido:\n\n${message}\n\nTotal: R$ ${total}`);
+      window.open(`https://wa.me/5521965748366?text=${whatsappMessage}`, '_blank');
+    });
+  </script>
+</body>
+</html>
